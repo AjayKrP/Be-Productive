@@ -10,7 +10,7 @@ module.exports = app => {
     router.get("/", tasks.findAll);
 
     // Retrieve all published Tasks
-    router.get("/published", tasks.findAllPublished);
+    router.get("/published", tasks.findAllTaskDone);
 
     // Retrieve a single Task with id
     router.get("/:id", tasks.findOne);
@@ -24,5 +24,9 @@ module.exports = app => {
     // Create a new Task
     router.delete("/", tasks.deleteAll);
 
+    // Create a new Task
+    router.put("/done/:id", tasks.markTaskAsDone);
+
     app.use('/api/tasks', router);
+
 };

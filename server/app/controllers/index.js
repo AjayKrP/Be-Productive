@@ -4,6 +4,7 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Tasks
 exports.create = (req, res) => {
+    console.log(req.body);
     if (!req.body.description) {
         res.status(400).send({
             message: "Description can not be empty!"
@@ -75,7 +76,7 @@ exports.update = (req, res) => {
         where: { id: id }
     }).then(num => {
         console.log(num)
-            if (num == 1) {
+            if (num === 1) {
                 res.send({
                     message: "Task was updated successfully."
                 });
@@ -100,7 +101,7 @@ exports.delete = (req, res) => {
         where: { id: id }
     })
         .then(num => {
-            if (num == 1) {
+            if (num === 1) {
                 res.send({
                     message: "Task was deleted successfully!"
                 });
@@ -135,8 +136,8 @@ exports.deleteAll = (req, res) => {
 };
 
 // Find all published Tasks
-exports.findAllPublished = (req, res) => {
-    Task.findAll({ where: { published: true } })
+exports.findAllTaskDone = (req, res) => {
+    Task.findAll({ where: { taskDone: true } })
         .then(data => {
             res.send(data);
         })
@@ -144,6 +145,31 @@ exports.findAllPublished = (req, res) => {
             res.status(500).send({
                 message:
                     err.message || "Some error occurred while retrieving tasks."
+            });
+        });
+};
+
+exports.markTaskAsDone = (req, res) => {
+    const id = req.params.id;
+    let updateValues = { taskDone: true };
+    console.log('make as done: ' + id);
+    Task.update(updateValues, {
+        where: { id: id }
+    }).then(num => {
+        console.log(num)
+        if (num === 1) {
+            res.send({
+                message: `Task id ${id} marked as done`
+            });
+        } else {
+            res.send({
+                message: `Cannot update Task with id=${id}. Maybe Task was not found or req.body is empty!`
+            });
+        }
+    })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Tutorial with id=" + id
             });
         });
 };

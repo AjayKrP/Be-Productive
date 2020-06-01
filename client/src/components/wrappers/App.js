@@ -43,7 +43,6 @@ class App extends Component {
     }
 
     render() {
-
         const callBackFunctions = [
             this.callbackSetDescriptionParent,
             this.callbackSetStatusParent,
@@ -63,7 +62,9 @@ class App extends Component {
                                 </Home>
                             </Route>
                             <Route exact path={'/add'}>
-                                <Add data={callBackFunctions}/>
+                                <Add data={callBackFunctions}>
+                                    {this.state}
+                                </Add>
                             </Route>
                             <Route exact>
                                 <Page404/>

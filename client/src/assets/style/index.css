@@ -169,3 +169,7 @@ span.task-label {
         padding: 2px;
     }
 }
+
+.background-green {
+    background-color: lime;
+}

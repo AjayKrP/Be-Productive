@@ -12,6 +12,7 @@ export default class Add extends React.Component {
 
     async handleChange() {
         var self = this;
+        console.log(self.props.children)
         var response = await fetch('http://localhost:8080/api/tasks', {
             method: 'POST',
             body : JSON.stringify(self.props.children),
